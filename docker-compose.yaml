@@ -1,0 +1,199 @@
+version: '3.8'
+
+services:
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - PRODUCT_SERVICE_URL=http://product-service:3001
+      - ORDER_SERVICE_URL=http://order-service:3002
+      - USER_SERVICE_URL=http://user-service:3003
+      - INVENTORY_SERVICE_URL=http://inventory-service:3004
+      - AUTH_SERVICE_URL=http://auth-service:3005
+      - PAYMENT_SERVICE_URL=http://payment-service:3006
+      - REVIEW_SERVICE_URL=http://review-service:3007
+    depends_on:
+      - product-service
+      - order-service
+      - user-service
+      - inventory-service
+    networks:
+      - ecommerce-network
+    volumes:
+      - ./api-gateway:/app
+      - /app/node_modules
+
+  # Product Service
+  product-service:
+    build: ./product-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - MONGODB_URI=mongodb://mongodb:27017/product-service
+    depends_on:
+      - mongodb
+    networks:
+      - ecommerce-network
+    volumes:
+      - ./product-service:/app
+      - /app/node_modules
+
+  # Order Service
+  order-service:
+    build: ./order-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - MONGODB_URI=mongodb://mongodb:27017/order-service
+      - PRODUCT_SERVICE_URL=http://product-service:3001
+      - INVENTORY_SERVICE_URL=http://inventory-service:3004
+      - PAYMENT_SERVICE_URL=http://payment-service:3006
+    depends_on:
+      - mongodb
+      - product-service
+      - inventory-service
+    networks:
+      - ecommerce-network
+    volumes:
+      - ./order-service:/app
+      - /app/node_modules
+
+  # User Service
+  user-service:
+    build: ./user-service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+      - MONGODB_URI=mongodb://mongodb:27017/user-service
+    depends_on:
+      - mongodb
+    networks:
+      - ecommerce-network
+    volumes:
+      - ./user-service:/app
+      - /app/node_modules
+
+  # Inventory Service
+  inventory-service:
+    build: ./inventory-service
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - MONGODB_URI=mongodb://mongodb:27017/inventory-service
+    depends_on:
+      - mongodb
+    networks:
+      - ecommerce-network
+    volumes:
+      - ./inventory-service:/app
+      - /app/node_modules
+
+  # MongoDB (Database)
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - ecommerce-network
+    command: mongod --bind_ip_all
+
+  # Client (React Frontend)
+  client:
+    build: ./client
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - ecommerce-network
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+  # The services below are marked as "for later" but included in the architecture
+  # They are commented out to be enabled when needed
+
+  # # Authentication Service
+  # auth-service:
+  #   build: ./auth-service
+  #   ports:
+  #     - "3005:3005"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3005
+  #     - MONGODB_URI=mongodb://mongodb:27017/auth-service
+  #     - JWT_SECRET=your_jwt_secret_key
+  #   depends_on:
+  #     - mongodb
+  #   networks:
+  #     - ecommerce-network
+  #   volumes:
+  #     - ./auth-service:/app
+  #     - /app/node_modules
+
+  # # Payment Service
+  # payment-service:
+  #   build: ./payment-service
+  #   ports:
+  #     - "3006:3006"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3006
+  #     - MONGODB_URI=mongodb://mongodb:27017/payment-service
+  #   depends_on:
+  #     - mongodb
+  #   networks:
+  #     - ecommerce-network
+  #   volumes:
+  #     - ./payment-service:/app
+  #     - /app/node_modules
+
+  # # Review Service
+  # review-service:
+  #   build: ./review-service
+  #   ports:
+  #     - "3007:3007"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3007
+  #     - MONGODB_URI=mongodb://mongodb:27017/review-service
+  #   depends_on:
+  #     - mongodb
+  #   networks:
+  #     - ecommerce-network
+  #   volumes:
+  #     - ./review-service:/app
+  #     - /app/node_modules
+
+  # # RabbitMQ (Message Broker)
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   networks:
+  #     - ecommerce-network
+  #   volumes:
+  #     - rabbitmq-data:/var/lib/rabbitmq
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  # rabbitmq-data:

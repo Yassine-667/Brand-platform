@@ -1,0 +1,9 @@
+:root {
+  --primary: #053F5C;
+  --primary-light: #0E6394;
+  --secondary: #3CAEA3;
+  --accent: #F6D55C;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --gradient-primary: linear-gradient(to bottom, #053F5C, #0E6394);
+}
