@@ -1,6 +1,7 @@
 // src/pages/ProductDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import ProductCard from '../components/ProductCard';
 
 const ProductDetail = () => {
@@ -11,6 +12,8 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const { addItem } = useCart();
 
   // Sample data - in a real app, this would come from your API
   useEffect(() => {
@@ -37,7 +40,8 @@ const ProductDetail = () => {
           'https://via.placeholder.com/600x800?text=T-Shirt+Side',
           'https://via.placeholder.com/600x800?text=T-Shirt+Detail'
         ],
-        category: 'tshirts'
+        category: 'tshirts',
+        imageUrl: 'https://via.placeholder.com/600x800?text=T-Shirt+Front'
       };
 
       const sampleRelatedProducts = [
@@ -87,27 +91,68 @@ const ProductDetail = () => {
       return;
     }
     
-    // In a real app, you would dispatch an action to add to cart
-    console.log('Added to cart:', {
-      product: product.id,
+    // Calculate the actual price after discount
+    const actualPrice = product.discount > 0 
+      ? product.price * (1 - product.discount / 100) 
+      : product.price;
+    
+    // Add item to cart
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: actualPrice,
       size: selectedSize,
-      quantity,
+      quantity: quantity,
+      imageUrl: product.imageUrl || product.images[0]
     });
     
-    alert('Product added to cart!');
+    // Show success message
+    setAddedToCart(true);
+    
+    // Reset message after 3 seconds
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 3000);
   };
 
   if (loading) {
-    return <div className="loading">Loading product details...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    );
   }
 
   if (!product) {
-    return <div className="error">Product not found</div>;
+    return (
+      <div className="error-container">
+        <i className="fas fa-exclamation-circle"></i>
+        <h2>Product not found</h2>
+        <p>The product you're looking for doesn't exist or has been removed.</p>
+        <Link to="/categories" className="btn btn-primary">
+          Continue Shopping
+        </Link>
+      </div>
+    );
   }
+
+  // Calculate the actual price after discount
+  const actualPrice = product.discount > 0 
+    ? product.price * (1 - product.discount / 100) 
+    : product.price;
 
   return (
     <div className="product-detail-page">
       <div className="container">
+        {addedToCart && (
+          <div className="cart-notification">
+            <i className="fas fa-check-circle"></i>
+            <span>Product added to cart!</span>
+            <Link to="/cart" className="view-cart-btn">View Cart</Link>
+          </div>
+        )}
+        
         <div className="product-detail">
           <div className="product-gallery">
             <div className="product-main-image">
@@ -140,7 +185,7 @@ const ProductDetail = () => {
                 <>
                   <span className="price-original">${product.price.toFixed(2)}</span>
                   <span className="price-discounted">
-                    ${(product.price * (1 - product.discount / 100)).toFixed(2)}
+                    ${actualPrice.toFixed(2)}
                   </span>
                   <span className="discount-badge">{product.discount}% OFF</span>
                 </>
@@ -200,7 +245,7 @@ const ProductDetail = () => {
 
             <div className="product-actions">
               <button className="btn btn-primary btn-add-to-cart" onClick={handleAddToCart}>
-                Add to Cart
+                <i className="fas fa-shopping-cart"></i> Add to Cart
               </button>
               <button className="btn btn-outline btn-wishlist">
                 <i className="far fa-heart"></i> Add to Wishlist
