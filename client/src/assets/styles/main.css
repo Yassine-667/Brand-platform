@@ -18,14 +18,15 @@ body {
   padding: 0 20px;
 }
 
-.btn {
+.btn, a.btn {
   display: inline-block;
   padding: 10px 20px;
   border: none;
-  border-radius: 25px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -35,7 +36,15 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(5, 63, 92, 0.3);
+  box-shadow: 0 5px 15px rgba(16, 44, 68, 0.3);
+}
+
+.hero-content .btn {
+  text-decoration: none;
+}
+
+.hero-content .btn:hover {
+  text-decoration: none;
 }
 
 .section-title {
@@ -80,6 +89,7 @@ body {
   animation: fadeIn 0.5s ease forwards;
 }
 
+/* Navbar */
 .navbar {
   background: var(--gradient-primary);
   padding: 15px 0;
@@ -94,6 +104,56 @@ body {
   justify-content: space-between;
 }
 
+/* Left section with toggle and social media */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Hamburger toggle button */
+.navbar-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.navbar-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 3px;
+}
+
+/* Social icons */
+.navbar-social {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.social-icon {
+  color: white;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Center brand logo */
+.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
 .navbar-logo {
   color: white;
   font-size: 1.8rem;
@@ -102,26 +162,11 @@ body {
   letter-spacing: 1px;
 }
 
-.navbar-menu {
-  display: flex;
-  list-style: none;
-}
-
-.navbar-link {
-  color: white;
-  text-decoration: none;
-  padding: 8px 15px;
-  font-weight: 500;
-  transition: all 0.3s;
-}
-
-.navbar-link:hover {
-  color: var(--accent);
-}
-
-.navbar-actions {
+/* Right actions */
+.navbar-right {
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .navbar-action {
@@ -137,44 +182,84 @@ body {
   color: var(--accent);
 }
 
-.navbar-toggle {
-  display: none;
+/* Menu items */
+.navbar-menu-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.navbar-menu-container.active {
+  max-height: 300px;
+}
+
+.navbar-menu {
+  display: flex;
   flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar-toggle span {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  border-radius: 3px;
+.navbar-menu li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@media (max-width: 768px) {
-  .navbar-toggle {
-    display: flex;
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  padding: 12px 15px;
+  display: block;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.navbar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 992px) {
+  .navbar-menu-container {
+    max-height: none;
+    background-color: transparent;
   }
   
   .navbar-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background: var(--primary);
-    padding: 20px;
-    transform: translateY(-200%);
-    transition: transform 0.3s ease;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px 0;
   }
   
-  .navbar-menu.active {
-    transform: translateY(0);
+  .navbar-menu li {
+    border-bottom: none;
   }
   
   .navbar-link {
-    display: block;
-    padding: 10px 0;
+    padding: 0 15px;
+  }
+  
+  .navbar-link:hover {
+    background-color: transparent;
+  }
+}
+
+@media (max-width: 768px) {  
+  .navbar-center {
+    position: static;
+    transform: none;
+  }
+  
+  .navbar-left {
+    gap: 10px;
+  }
+  
+  .navbar-social {
+    gap: 10px;
+  }
+  
+  .social-icon {
+    font-size: 1rem;
   }
 }
 
@@ -621,7 +706,7 @@ body {
   border: 1px solid var(--primary);
   color: var(--primary);
   padding: 12px 20px;
-  border-radius: 25px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;

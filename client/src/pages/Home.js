@@ -75,9 +75,6 @@ const Home = () => {
           <div className="hero-content">
             <h1>Discover Your Style</h1>
             <p>Explore our latest collection for the season</p>
-            <Link to="/categories" className="btn btn-primary">
-              Shop Now
-            </Link>
           </div>
         </div>
       </section>

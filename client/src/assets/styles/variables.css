@@ -1,9 +1,9 @@
 :root {
-  --primary: #053F5C;
-  --primary-light: #0E6394;
+  --primary: #102C44;  /* Darker blue */
+  --primary-light: #1D4568;  /* Darker blue for the light variant */
   --secondary: #3CAEA3;
   --accent: #F6D55C;
   --light: #f8f9fa;
   --dark: #343a40;
-  --gradient-primary: linear-gradient(to bottom, #053F5C, #0E6394);
+  --gradient-primary: linear-gradient(to bottom, #102C44, #1D4568);  /* Updated gradient with darker blues */
 }

@@ -31,32 +31,36 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="container navbar-container">
-        <Link to="/" className="navbar-logo">
-          BRAND
-        </Link>
-        
-        <div className="navbar-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <span></span>
-          <span></span>
-          <span></span>
+        {/* Left Section: Hamburger menu and social icons */}
+        <div className="navbar-left">
+          <div className="navbar-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          
+          <div className="navbar-social">
+            <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-twitter"></i>
+            </a>
+          </div>
         </div>
         
-        <ul className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
-          <li>
-            <Link to="/" className="navbar-link">Home</Link>
-          </li>
-          <li>
-            <Link to="/categories" className="navbar-link">Categories</Link>
-          </li>
-          <li>
-            <Link to="/products/new" className="navbar-link">New Arrivals</Link>
-          </li>
-          <li>
-            <Link to="/products/sale" className="navbar-link">Sale</Link>
-          </li>
-        </ul>
+        {/* Center: Brand Logo */}
+        <div className="navbar-center">
+          <Link to="/" className="navbar-logo">
+            BRAND
+          </Link>
+        </div>
         
-        <div className="navbar-actions">
+        {/* Right: User Actions */}
+        <div className="navbar-right">
           <button className="navbar-action">
             <i className="fas fa-search"></i>
           </button>
@@ -93,6 +97,26 @@ const Navbar = () => {
               <i className="fas fa-user"></i>
             </Link>
           )}
+        </div>
+      </div>
+      
+      {/* Navigation Menu (expandable) */}
+      <div className={`navbar-menu-container ${isMenuOpen ? 'active' : ''}`}>
+        <div className="container">
+          <ul className="navbar-menu">
+            <li>
+              <Link to="/" className="navbar-link">Home</Link>
+            </li>
+            <li>
+              <Link to="/categories" className="navbar-link">Categories</Link>
+            </li>
+            <li>
+              <Link to="/products/new" className="navbar-link">New Arrivals</Link>
+            </li>
+            <li>
+              <Link to="/products/sale" className="navbar-link">Sale</Link>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
