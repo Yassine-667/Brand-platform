@@ -1,9 +1,13 @@
 :root {
-  --primary: #102C44;  /* Darker blue */
-  --primary-light: #1D4568;  /* Darker blue for the light variant */
-  --secondary: #3CAEA3;
-  --accent: #F6D55C;
+  --primary: #0F0F0F;         /* Noir mat (matte black) */
+  --primary-light: #1A1A1A;   /* Slightly lighter noir mat */
+  --secondary: #FFFFFF;       /* White */
+  --accent: #BF9B30;          /* Dark gold */
+  --accent-glow: rgba(191, 155, 48, 0.5); /* Dark gold with opacity for glow effect */
   --light: #f8f9fa;
-  --dark: #343a40;
-  --gradient-primary: linear-gradient(to bottom, #102C44, #1D4568);  /* Updated gradient with darker blues */
+  --dark: #0A0A0A;            /* Darker black */
+  --gradient-primary: linear-gradient(to bottom, #0F0F0F, #1A1A1A);  /* Updated gradient with noir mat theme */
+  --text-light: #FFFFFF;      /* White text */
+  --text-muted: #AAAAAA;      /* Muted text */
+  --border-color: #2A2A2A;    /* Subtle border color */
 }
