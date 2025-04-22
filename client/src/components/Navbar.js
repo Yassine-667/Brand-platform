@@ -28,12 +28,16 @@ const Navbar = () => {
     window.location.href = '/';
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
       <div className="container navbar-container">
         {/* Left Section: Hamburger menu and social icons */}
         <div className="navbar-left">
-          <div className="navbar-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <div className={`navbar-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
             <span></span>
             <span></span>
             <span></span>
@@ -43,8 +47,8 @@ const Navbar = () => {
             <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook-f"></i>
+            <a href="https://tiktok.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-tiktok"></i>
             </a>
             <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-twitter"></i>

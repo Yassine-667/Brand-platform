@@ -139,6 +139,7 @@ body {
   font-size: 1.2rem;
   opacity: 0.8;
   transition: all 0.3s ease;
+  text-decoration: none !important;
 }
 
 .social-icon:hover {
@@ -170,18 +171,34 @@ body {
 }
 
 .navbar-action {
-  background: none;
-  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s;
+  text-decoration: none !important;
 }
 
 .navbar-action:hover {
-  color: var(--accent);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none !important;
 }
 
+/* Fix for all anchor elements in the navbar */
+.navbar a,
+.navbar-right a,
+.navbar-center a {
+  text-decoration: none !important;
+}
 /* Menu items */
 .navbar-menu-container {
   background-color: rgba(0, 0, 0, 0.2);
@@ -852,5 +869,133 @@ body {
   
   .hero-content h1 {
     font-size: 2rem;
+  }
+}
+
+.navbar-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.navbar-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.navbar-toggle span {
+  width: 18px;
+  height: 2px;
+  background-color: white;
+  border-radius: 5px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggle:hover span {
+  width: 20px;
+}
+
+/* Active state for hamburger toggle */
+.navbar-toggle.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.navbar-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-toggle.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Consistent sizing for social icons */
+.navbar-social {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.social-icon {
+  color: white;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.social-icon:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+/* Ensure navbar-action has consistent styling */
+.navbar-action {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar-action:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  color: white;
+}
+
+/* Update the cart indicator badge positioning */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--accent);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-social {
+    gap: 10px;
+  }
+  
+  .social-icon,
+  .navbar-action,
+  .navbar-toggle {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .navbar-toggle span {
+    width: 16px;
   }
 }
